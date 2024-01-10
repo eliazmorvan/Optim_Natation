@@ -17,7 +17,7 @@ def import_data_fake(n = 20, m = 10, r = 4):
     S = np.arange(0,n*m).reshape((n,m))
     T = np.arange(0,n*1).reshape((n,1))
     R = np.arange(0,n*r).reshape((n,r))
-    G = np.random.randint(0,1,n)
+    G = np.random.randint(0,2,n)
     G = 2*G-1
     return S, T, R, G
     

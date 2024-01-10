@@ -61,8 +61,8 @@ def create_20(n,m,r):
     A = np.zeros((n,n*m+n+r*n))
     for i in range(n):
         Ax = np.zeros((n,m))
-        Ap = np.zeros((1,n))
-        Ap[0,i] = -1
+        Ap = np.zeros((n,1))
+        Ap[i,:] = -1
         Ay = np.zeros((n,r))
         Ay[i,:] = 2
         
@@ -105,8 +105,8 @@ def create_24(n,m,r,G):
     
     A = np.zeros((1,n*m+n+r*n))
     A[0] = func.build_variable((Ax, Ap, Ay))
-    bl = np.ones(r)
-    ul = np.ones(r)
+    bl = np.zeros(1)
+    ul = np.zeros(1)
     return A, bl, ul
 
 def create_A_bl_ul(n,m,r,G):
@@ -133,6 +133,13 @@ def main():
     u = np.ones(Nx)
     A, bl, ul = create_A_bl_ul(n,m,r,G)
     assert Nc == A.shape[0]
-    return A, bl, ul, l, u
     
-A, bl, ul, l, u = main()
+    from scipy.optimize import LinearConstraint, milp, Bounds
+    constraints = LinearConstraint(A, bl, ul)
+    bounds = Bounds(lb=l, ub=u)
+
+    res = milp(c=-c, constraints=constraints, bounds=bounds, integrality=np.ones(len(c)))
+    
+    return res
+
+main()
