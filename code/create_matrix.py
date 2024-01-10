@@ -33,13 +33,14 @@ def create_16(n,m,r):
     Ap = func.flatten_variable(Ap)[0]
     Ay = func.flatten_variable(Ay)[0]
     
-    A = func.build_variable((Ax, Ap, Ay))
+    A = np.zeros((1,n*m+n+r*n))
+    A[0] = func.build_variable((Ax, Ap, Ay))
     bl = m*np.ones(1)
     ul = m*np.ones(1)
     return A, bl, ul
 
 def create_18(n,m,r):
-    A = np.zeros((n,n*m+m+r*n))
+    A = np.zeros((n,n*m+n+r*n))
     for i in range(n):
         Ax = np.zeros((n,m))
         Ax[i,:] = 1
@@ -57,7 +58,7 @@ def create_18(n,m,r):
     return A, bl, ul
 
 def create_20(n,m,r):
-    A = np.zeros((n,n*m+m+r*n))
+    A = np.zeros((n,n*m+n+r*n))
     for i in range(n):
         Ax = np.zeros((n,m))
         Ap = np.zeros((1,n))
@@ -74,17 +75,64 @@ def create_20(n,m,r):
     ul = np.ones(n)
     return A, bl, ul
 
+def create_22(n,m,r):
+    A = np.zeros((r,n*m+n+r*n))
+    for k in range(r):
+        Ax = np.zeros((n,m))
+        Ap = np.zeros((1,n))
+        Ay = np.zeros((n,r))
+        Ay[:,k] = 1
+        
+        Ax = func.flatten_variable(Ax)[0]
+        Ap = func.flatten_variable(Ap)[0]
+        Ay = func.flatten_variable(Ay)[0]
+        
+        A[k] = func.build_variable((Ax, Ap, Ay))
+    bl = np.ones(r)
+    ul = np.ones(r)
+    return A, bl, ul
 
+def create_24(n,m,r,G):
+    Ax = np.zeros((n,m))
+    Ap = np.zeros((1,n))
+    Ay = np.zeros((n,r))
+    for i in range(n):
+        Ay[i,:] = G[i]
+    
+    Ax = func.flatten_variable(Ax)[0]
+    Ap = func.flatten_variable(Ap)[0]
+    Ay = func.flatten_variable(Ay)[0]
+    
+    A = np.zeros((1,n*m+n+r*n))
+    A[0] = func.build_variable((Ax, Ap, Ay))
+    bl = np.ones(r)
+    ul = np.ones(r)
+    return A, bl, ul
 
-
+def create_A_bl_ul(n,m,r,G):
+    A14, bl14, ul14 = create_14(n,m,r)
+    A16, bl16, ul16 = create_16(n,m,r)
+    A18, bl18, ul18 = create_18(n,m,r)
+    A20, bl20, ul20 = create_20(n,m,r)
+    A22, bl22, ul22 = create_22(n,m,r)
+    A24, bl24, ul24 = create_24(n,m,r,G)
+    A = func.build_constrains((A14,A16,A18,A20,A22,A24))
+    bl = func.build_constrains((bl14,bl16,bl18,bl20,bl22,bl24))
+    ul = func.build_constrains((ul14,ul16,ul18,ul20,ul22,ul24))
+    return A, bl, ul
 
 def main():
     n = 20
     m = 10
     r = 4
-    S, T, R = func.import_data_fake(n,m,r)
+    S, T, R, G = func.import_data_fake(n,m,r)
     c = func.create_c(S, T, R)
     Nx = len(c) # size of x
     Nc = m+1+n+n+r+1 # number of constrains
     l = np.zeros(Nx)
     u = np.ones(Nx)
+    A, bl, ul = create_A_bl_ul(n,m,r,G)
+    assert Nc == A.shape[0]
+    return A, bl, ul, l, u
+    
+A, bl, ul, l, u = main()

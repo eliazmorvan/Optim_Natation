@@ -17,16 +17,19 @@ def import_data_fake(n = 20, m = 10, r = 4):
     S = np.arange(0,n*m).reshape((n,m))
     T = np.arange(0,n*1).reshape((n,1))
     R = np.arange(0,n*r).reshape((n,r))
-    return S, T, R
+    G = np.random.randint(0,1,n)
+    G = 2*G-1
+    return S, T, R, G
     
 
-def check_consistancy(S, T, R):
+def check_consistancy(S, T, R, G):
     """Chack that all imported variable have the write shape"""
     ns, ms = S.shape
     nt, mt = T.shape
     nr, mr = R.shape
+    ng, mg = R.shape
     
-    assert ns == nt == nr
+    assert ns == nt == nr == ng
     
     assert ms == 10
     assert mt == 1
@@ -46,7 +49,7 @@ def build_variable(L):
     return np.concatenate(L)
 
 def build_constrains(L):
-    return np.stack(L)
+    return np.concatenate(L, axis=0)
 
 def create_c(S, T, R):
     S_f = flatten_variable(S)[0]
