@@ -43,9 +43,9 @@ def create_18(n,m,r):
     A = np.zeros((n,n*m+n+r*n))
     for i in range(n):
         Ax = np.zeros((n,m))
-        Ax[i,:] = 1
-        Ap = np.zeros((1,n))
-        Ap[0,i] = 1
+        Ax[i,:] = -1
+        Ap = np.zeros((n,1))
+        Ap[i,:] = 1
         Ay = np.zeros((n,r))
         
         Ax = func.flatten_variable(Ax)[0]
@@ -126,13 +126,11 @@ def main():
     m = 10
     r = 4
     S, T, R, G = func.import_data_fake(n,m,r)
+    A, bl, ul = create_A_bl_ul(n,m,r,G)
     c = func.create_c(S, T, R)
     Nx = len(c) # size of x
-    Nc = m+1+n+n+r+1 # number of constrains
     l = np.zeros(Nx)
     u = np.ones(Nx)
-    A, bl, ul = create_A_bl_ul(n,m,r,G)
-    assert Nc == A.shape[0]
     
     from scipy.optimize import LinearConstraint, milp, Bounds
     constraints = LinearConstraint(A, bl, ul)
@@ -140,6 +138,10 @@ def main():
 
     res = milp(c=-c, constraints=constraints, bounds=bounds, integrality=np.ones(len(c)))
     
-    return res
+    X = func.inverse_flatten_variable(res.x[0:n*m],n)
+    P = func.inverse_flatten_variable(res.x[n*m:n*(m+1)],n)
+    Y = func.inverse_flatten_variable(res.x[n*(m+1):n*(m+r+1)],n)
+    return res, X, P, Y
 
-main()
+res, X, P, Y = main()
+res
