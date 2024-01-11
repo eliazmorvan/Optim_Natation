@@ -6,6 +6,7 @@ Created on Wed Jan 10 18:41:54 2024
 """
 import numpy as np
 import functions as func
+import import_data as imp
 
 def create_14(n,m,r):
     A = np.zeros((m,n*m+n+r*n))
@@ -121,11 +122,12 @@ def create_A_bl_ul(n,m,r,G):
     ul = func.build_constrains((ul14,ul16,ul18,ul20,ul22,ul24))
     return A, bl, ul
 
-def main():
+def main(PATH):
     n = 20
     m = 10
     r = 4
     S, T, R, G = func.import_data_fake(n,m,r)
+    S, T, R, G, n, m, r, df = imp.import_perf_indiv(PATH)
     A, bl, ul = create_A_bl_ul(n,m,r,G)
     c = func.create_c(S, T, R)
     Nx = len(c) # size of x
@@ -141,7 +143,4 @@ def main():
     X = func.inverse_flatten_variable(res.x[0:n*m],n)
     P = func.inverse_flatten_variable(res.x[n*m:n*(m+1)],n)
     Y = func.inverse_flatten_variable(res.x[n*(m+1):n*(m+r+1)],n)
-    return res, X, P, Y
-
-res, X, P, Y = main()
-res
+    return res, X, P, Y, df

@@ -6,9 +6,6 @@ Created on Wed Jan 10 18:20:18 2024
 """
 import numpy as np
 
-def import_data(PATH):
-    return
-
 def import_data_fake(n = 20, m = 10, r = 4):
     """
     n swimmers
