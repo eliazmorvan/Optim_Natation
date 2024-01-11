@@ -122,14 +122,14 @@ def create_A_bl_ul(n,m,r,G):
     ul = func.build_constrains((ul14,ul16,ul18,ul20,ul22,ul24))
     return A, bl, ul
 
-def main(PATH):
+def main(PATH, coeff_10x50=1, coeff_4x50=1):
     n = 20
     m = 10
     r = 4
     S, T, R, G = func.import_data_fake(n,m,r)
     S, T, R, G, n, m, r, df = imp.import_perf_indiv(PATH)
     A, bl, ul = create_A_bl_ul(n,m,r,G)
-    c = func.create_c(S, T, R)
+    c = func.create_c(S, coeff_10x50*T, coeff_4x50*R)
     Nx = len(c) # size of x
     l = np.zeros(Nx)
     u = np.ones(Nx)
@@ -143,4 +143,4 @@ def main(PATH):
     X = func.inverse_flatten_variable(res.x[0:n*m],n)
     P = func.inverse_flatten_variable(res.x[n*m:n*(m+1)],n)
     Y = func.inverse_flatten_variable(res.x[n*(m+1):n*(m+r+1)],n)
-    return res, X, P, Y, df
+    return res, X, P, Y, S, T, R, G, df

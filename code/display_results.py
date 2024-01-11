@@ -7,9 +7,10 @@ Created on Thu Jan 11 12:18:30 2024
 
 import create_matrix as cre
 import numpy as np
+import pandas as pd
 
 PATH = "../nageur_points.csv"
-res, X, P, Y, df = cre.main(PATH)
+res, X, P, Y, S, T, R, G, df = cre.main(PATH,1,1)
 
 Nageur = df.loc[P==1, "Nom"]
 nage_indiv_name = ['50pap', '100pap', '50Dos', '100Dos', '50Br',
@@ -26,8 +27,18 @@ for x in Y[P.flatten()==1,:]:
         ind = np.where(x == 1)[0][0]
         nage_relais.append(nage_relais_name[ind])
     except :
-        nage_relais.append(None)
+        nage_relais.append("")
         
-print(Nageur)
-print(nage_indiv)
-print(nage_relais)
+df = pd.DataFrame()
+df["Nom"] = Nageur
+df["Indiv"] = nage_indiv
+df["Relais_4N"] = nage_relais
+df["Relais_NL"] = 10*[""]
+
+df = pd.concat([df,pd.DataFrame({"Nom":["","Total points"],
+                                 "Indiv":["",np.sum(X*S)],
+                                 "Relais_4N": ["",np.sum(Y*R)],
+                                 "Relais_NL": ["",np.sum(P.flatten()*T)]})],
+               ignore_index=True)
+
+print(df)
