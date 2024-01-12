@@ -70,12 +70,14 @@ def concret_model(S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, linear):
 
 
 def main(PATH, linear=False):
-    S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, df = imp.import_perf_indiv(PATH, MILP=False)
-    model = concret_model(S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, linear)
     if linear :
+        S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, df = imp.import_perf_indiv(PATH, MILP=False)
+        model = concret_model(S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, linear)
         opt = pyo.SolverFactory('glpk')
         opt.solve(model)
     else :
+        S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, df = imp.import_perf_indiv(PATH, MILP=False)
+        model = concret_model(S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, linear)
         pyo.SolverFactory('mindtpy').solve(model, mip_solver='glpk', nlp_solver='ipopt') 
     return model
 
