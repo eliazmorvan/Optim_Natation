@@ -19,7 +19,7 @@ def import_perf_indiv(PATH, MILP=True):
     # cols =['NomPrénom', 'Age', 'AnnéeNaissance', 'Cat', 'Sexe',
     #        'Coef', '50pap', '100pap', '50Dos', '100Dos', '50Br',
     #        '100Br', '50NL', '100NL', '200NL', '1004N', "present"]
-    cols = ['NomPrénom', 'Nom', 'Prénom', 'Age', 'AnnéeNaissance', 'Cat', 'Sexe',
+    cols = ['Age', 'AnnéeNaissance', 'Cat', 'Sexe',
            'ReportTemps', 'Coef', 'TS', 'TS/coef', 'TS/coef \nmm,sscc', 'Si femme',
            'Si Monsieur', '50pap', 'ReportTemps2', 'Coef2', 'TS2', 'TS/coef3',
            'TS/coef mm,sscc4', 'Si femme5', 'Si Monsieur6', '100pap',
@@ -62,15 +62,15 @@ def import_perf_indiv(PATH, MILP=True):
     
     else :
         df = df.set_index('NomPrénom')
-        S = df[nage_indiv]
-        T = (1/m)*df["50NL"]
-        R = (1/r)*df[nage_relais]
-        G = df["Sexe"]
+        S = df[nage_indiv].copy()
+        T = (1/m)*df["50NL"].copy()
+        R = (1/r)*df[nage_relais].copy()
+        G = df["Sexe"].copy()
         
         n = S.shape[0]
     
         # Time for each race
-        temps = df[['TS', 'TS3', 'TS5', 'TS7']]
+        temps = df[['TS', 'TS3', 'TS5', 'TS7']].copy()
         rename = {'TS': '50pap',
                   'TS3': '50Dos',
                   'TS5': '50Br',
@@ -78,7 +78,7 @@ def import_perf_indiv(PATH, MILP=True):
                   }
         T_4N = temps.rename(columns=rename)
         # Coeff for each race
-        coef = df[['Coef', 'Coef3', 'Coef5', 'Coef7']]
+        coef = df[['Coef', 'Coef3', 'Coef5', 'Coef7']].copy()
         rename = {'Coef': '50pap',
                   'Coef3': '50Dos',
                   'Coef5': '50Br',
