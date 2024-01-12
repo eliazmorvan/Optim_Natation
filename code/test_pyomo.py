@@ -21,16 +21,18 @@ model.J = pyo.Set(initialize=S.columns)
 model.X = pyo.Var(model.I, model.J, domain=pyo.Binary)
 
 def obj_expression(model):
-    return sum(model.X[i,j] * S.loc[i,j] for i in model.I for j in model.J)
+    return sum(model.X[i,j]**2 * S.loc[i,j] for i in model.I for j in model.J)
 
 model.OBJ = pyo.Objective(rule=obj_expression, sense=pyo.maximize)
 
 def race_once(model, j):
     return sum(model.X[i,j] for i in model.I) == 1
 
+# def test(model):
+#     return sum(model.X[i,j] * S.loc[i,j] for i in model.I for j in model.J)* pyo.log(sum(model.X[i,j] * S.loc[i,j] for i in model.I for j in model.J))+5.0 <= 0
+
 # the next line creates one constraint for each member of the set model.I
 model.cons_race_once = pyo.Constraint(model.J,rule=race_once)
-model.c2 = pyo.Constraint(expr=sum(model.X[i,j] * S.loc[i,j] for i in model.I for j in model.J)*
-                          pyo.log(sum(model.X[i,j] * S.loc[i,j] for i in model.I for j in model.J))+5.0 <= 0)
+# model.c2 = pyo.Constraint(rule=test)
 
 pyo.SolverFactory('mindtpy').solve(model, mip_solver='glpk', nlp_solver='ipopt') 
