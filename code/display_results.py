@@ -12,7 +12,7 @@ import pandas as pd
 PATH = "../nageur_points.csv"
 res, X, P, Y, S, T, R, G, df = cre.main(PATH,1,1)
 
-Nageur = df.loc[P==1, "Nom"]
+Nageur = df.loc[P==1, "NomPrénom"]
 nage_indiv_name = ['50pap', '100pap', '50Dos', '100Dos', '50Br',
         '100Br', '50NL', '100NL', '200NL', '1004N']
 nage_indiv = []
@@ -30,12 +30,12 @@ for x in Y[P.flatten()==1,:]:
         nage_relais.append("")
         
 df = pd.DataFrame()
-df["Nom"] = Nageur
+df["NomPrénom"] = Nageur
 df["Indiv"] = nage_indiv
 df["Relais_4N"] = nage_relais
 df["Relais_NL"] = 10*[""]
 
-df = pd.concat([df,pd.DataFrame({"Nom":["","Total points"],
+df = pd.concat([df,pd.DataFrame({"NomPrénom":["","Total points"],
                                  "Indiv":["",np.sum(X*S)],
                                  "Relais_4N": ["",np.sum(Y*R)],
                                  "Relais_NL": ["",np.sum(P.flatten()*T)]})],
