@@ -6,6 +6,18 @@ Created on Wed Jan 10 18:20:18 2024
 """
 import numpy as np
 
+def point(temps, table):
+    return table.loc[table['TEMPS'] > temps,"POINTS"].max()
+
+def temps(point, table):
+    return table.loc[table['POINTS'] > point,"TEMPS"].max()
+
+def approx_lin(table, point1, point2):
+    temps1 = temps(point1, table)
+    temps2 =temps(point2, table)
+    a = np.abs((point1 - point2)/(temps1-temps2))
+    return a
+
 def import_data_fake(n = 20, m = 10, r = 4):
     """
     n swimmers

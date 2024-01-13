@@ -30,9 +30,9 @@ def concret_model(S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, linear):
             model.OBJ_2 = sum(model.P[i] * T.loc[i] for i in model.I)
             model.OBJ_3 = sum(model.Y[i,k] * R.loc[i,k] for i in model.I for k in model.K)
         else :
-            model.OBJ_2 = sum((-a_NL*10*model.P[i] * T_4N.loc[i,"50NL"] for i in model.I))/ \
+            model.OBJ_2 = 1500+sum((-a_NL*10*model.P[i] * T_4N.loc[i,"50NL"] for i in model.I))/ \
                                     sum(model.P[i] * RHO_4N.loc[i,"50NL"] for i in model.I)
-            model.OBJ_3 = sum((-a_4N*4*model.Y[i,k] * T_4N.loc[i,k] for i in model.I for k in model.K))/ \
+            model.OBJ_3 = 1500+sum((-a_4N*4*model.Y[i,k] * T_4N.loc[i,k] for i in model.I for k in model.K))/ \
                                     sum(model.Y[i,k] * RHO_4N.loc[i,k] for i in model.I for k in model.K)
         return sum([model.OBJ_1, model.OBJ_2, model.OBJ_3])
 
@@ -70,17 +70,17 @@ def concret_model(S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, linear):
 
 
 def main(PATH, linear=False):
-    S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, df = imp.import_perf_indiv(PATH, MILP=False)
+    S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, nageur_point, relais_NL, relais_4N = imp.import_perf_indiv(PATH, MILP=False)
     model = concret_model(S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, linear)
     if linear :
         opt = pyo.SolverFactory('glpk')
         opt.solve(model)
     else :
         pyo.SolverFactory('mindtpy').solve(model, mip_solver='glpk', nlp_solver='ipopt') 
-    return model
+    return model, nageur_point, relais_NL, relais_4N
 
 
-model = main("../nageur_points.csv", linear=True)
+model, nageur_point, relais_NL, relais_4N = main("../csv/", linear=False)
 for i in model.X:
     if model.X[i].value == 1:
         print(i)
