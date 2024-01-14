@@ -6,7 +6,12 @@ Created on Thu Jan 11 10:52:06 2024
 """
 import functions as func
 
-def import_perf_indiv(PATH, MILP=True):            
+def import_perf_indiv(PATH, MILP=True, in_other_team=None):   
+    """
+    Input :
+        - in_oter_team : dataframe
+            1 if in other team
+            0 otherwise"""         
     import pandas as pd
     
     def convert_to_float_0(s):
@@ -51,6 +56,11 @@ def import_perf_indiv(PATH, MILP=True):
     participation = pd.read_csv(PATH+"participation.csv", sep=";",
                                 encoding='ISO-8859-1',
                                 converters={"Participation" : convert_to_float_0})
+    participation = participation.set_index("NomPrénom")
+    if in_other_team is None :
+        participation["in_other_team"] = 1
+    else :
+        participation["in_other_team"] = 1-in_other_team
     
     id_10x50NL = 59
     id_4x504N = 98
@@ -60,9 +70,6 @@ def import_perf_indiv(PATH, MILP=True):
     
     relais_NL = table_cotation[table_cotation["EPREUVE_ID"]==id_10x50NL][["TEMPS","POINTS"]]
     relais_4N = table_cotation[table_cotation["EPREUVE_ID"]==id_4x504N][["TEMPS","POINTS"]]
-    
-    # Remove swimmers not available
-    func.remove_swimmer(nageur_point, relais_temps, participation, nage_indiv, nage_relais)
     
     nageur_point.loc[nageur_point["Sexe"] == "F", "Sexe"] = 1
     nageur_point.loc[nageur_point["Sexe"] == "M", "Sexe"] = -1
@@ -80,6 +87,9 @@ def import_perf_indiv(PATH, MILP=True):
         nageur_point = nageur_point.set_index('NomPrénom')
         relais_temps = relais_temps.set_index('NomPrénom')
         relais_coeff = relais_coeff.set_index('NomPrénom')
+        
+        # Remove swimmers not available
+        func.remove_swimmer(nageur_point, relais_temps, participation, nage_indiv, nage_relais)
         
         S = nageur_point[nage_indiv].copy()
         T = (1/m)*nageur_point["50NL"].copy()

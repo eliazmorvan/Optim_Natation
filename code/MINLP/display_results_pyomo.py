@@ -7,7 +7,7 @@ Created on Sun Jan 14 10:48:42 2024
 import pandas as pd
 import functions as func
 
-def display_res(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N):
+def display_res(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N, n_equipe, in_other_team):
     Nageur_indiv = []
     Nage_indiv = []
     Nageur_relais = []
@@ -59,8 +59,18 @@ def display_res(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N):
     points["Points relais NL"] = [func.point(temps_relais_NL, relais_NL)]
     points["Points relais 4N"] = [func.point(temps_relais_4N, relais_4N)]
     
+    print("------------------------------------------")
+    print("EQUIPE "+str(n_equipe))
     print()
     print(df[["Nage indiv", "Nage relais", "Points indiv"]])
     print()
-    print()
     print(points)
+    
+    if in_other_team is None :
+        in_other_team=pd.DataFrame()
+        in_other_team["NomPrénom"] = nageur_point.index
+        in_other_team["swim_in_other_team"] = 0
+        in_other_team = in_other_team.set_index('NomPrénom')
+    in_other_team.loc[df.index,"swim_in_other_team"] = 1
+    
+    return in_other_team
