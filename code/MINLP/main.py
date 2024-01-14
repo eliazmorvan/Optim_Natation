@@ -10,7 +10,6 @@ import MINLP.create_matrixpyomo as cre
 import MINLP.display_results_pyomo as disp
 import import_data as imp
 
-
 def solve(PATH, linear=False):
     S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, nageur_point, relais_NL, relais_4N = imp.import_perf_indiv(PATH, MILP=False)
     model = cre.concret_model(S, T, R, G, T_4N, RHO_4N, n, m, r, a_NL, a_4N, linear)

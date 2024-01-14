@@ -19,7 +19,7 @@ def import_perf_indiv(PATH, MILP=True):
 
     def convert_to_float(s):
         if s == "#N/A":
-            return 10*60
+            return 1000
         else :
             x = s.split(':')
             return 60*float(x[0]) + float(x[1])
@@ -62,8 +62,7 @@ def import_perf_indiv(PATH, MILP=True):
     relais_4N = table_cotation[table_cotation["EPREUVE_ID"]==id_4x504N][["TEMPS","POINTS"]]
     
     # Remove swimmers not available
-    nageur_point.loc[participation["Participation"]==0, nage_indiv] = 0
-    relais_temps.loc[participation["Participation"]==0, nage_relais] = 10e10
+    func.remove_swimmer(nageur_point, relais_temps, participation, nage_indiv, nage_relais)
     
     nageur_point.loc[nageur_point["Sexe"] == "F", "Sexe"] = 1
     nageur_point.loc[nageur_point["Sexe"] == "M", "Sexe"] = -1

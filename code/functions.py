@@ -18,6 +18,10 @@ def approx_lin(table, point1, point2):
     a = np.abs((point1 - point2)/(temps1-temps2))
     return a
 
+def remove_swimmer(table_point, table_temps, participation, nage_indiv, nage_relais):
+    table_point.loc[participation["Participation"]==0, nage_indiv] = 0
+    table_temps.loc[participation["Participation"]==0, nage_relais] = 1000
+
 def import_data_fake(n = 20, m = 10, r = 4):
     """
     n swimmers

@@ -32,8 +32,8 @@ def display_res(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N):
     df["NomPrénom"] = Nageur_indiv
     df["Nage indiv"] = Nage_indiv
     df["Nage relais"] = ""
-    df["Coeff relais 4N"] = 0
-    df["Temps relais 4N"] = 0
+    df["Coeff relais 4N"] = 0.0
+    df["Temps relais 4N"] = 0.0
     df = df.set_index('NomPrénom')
     
     for nom in df.index:
