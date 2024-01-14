@@ -54,6 +54,7 @@ def _test_create_14():
     print(A)
     
 def main():
+    a = 0
     # Y, m = _test_flatten_variable()
     # _test_inverse_flatten_variable(Y, m)
     # _test_consistancy()
