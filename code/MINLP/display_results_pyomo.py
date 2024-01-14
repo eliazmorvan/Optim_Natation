@@ -7,7 +7,7 @@ Created on Sun Jan 14 10:48:42 2024
 import pandas as pd
 import functions as func
 
-def display_res(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N, n_equipe, in_other_team):
+def compute_dataframe_display(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N, in_other_team):
     Nageur_indiv = []
     Nage_indiv = []
     Nageur_relais = []
@@ -59,13 +59,6 @@ def display_res(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N, n_equip
     points["Points relais NL"] = [func.point(temps_relais_NL, relais_NL)]
     points["Points relais 4N"] = [func.point(temps_relais_4N, relais_4N)]
     
-    print("------------------------------------------")
-    print("EQUIPE "+str(n_equipe))
-    print()
-    print(df[["Nage indiv", "Nage relais", "Points indiv"]])
-    print()
-    print(points)
-    
     if in_other_team is None :
         in_other_team=pd.DataFrame()
         in_other_team["NomPrénom"] = nageur_point.index
@@ -73,4 +66,21 @@ def display_res(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N, n_equip
         in_other_team = in_other_team.set_index('NomPrénom')
     in_other_team.loc[df.index,"swim_in_other_team"] = 1
     
-    return in_other_team
+    return in_other_team, df, points
+
+def save_in_csv(equipe, points, PATH):
+    with open(PATH+'best_team.csv','a') as f:
+        for n in range(len(equipe)):
+            f.write("Equipe "+str(n+1) +"\n")
+            equipe[n][["Nage indiv", "Nage relais", "Points indiv"]].to_csv(f, sep=';', lineterminator="\n")
+            f.write("\n")
+            points[n].to_csv(f, sep=';', lineterminator="\n")
+            f.write("\n")
+
+def display(equipe, points):
+    for n in range(len(equipe)):
+        print("------------------------------------------")
+        print("EQUIPE "+str(n+1))
+        print(equipe[n][["Nage indiv", "Nage relais", "Points indiv"]])
+        print()
+        print(points[n])

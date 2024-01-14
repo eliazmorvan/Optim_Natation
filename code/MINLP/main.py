@@ -26,8 +26,14 @@ def solve(PATH, linear=False, in_other_team=None):
 
 def main(PATH, linear=False):
     in_other_team = None
-    for n_equipe in range(1,7):
+    n_tot = 6
+    equipe = (n_tot)*[None]
+    points = (n_tot)*[None]
+    for n_equipe in range(n_tot):
         model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N = solve(PATH, linear, in_other_team)
-        in_other_team = disp.display_res(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N, n_equipe, in_other_team)
+        in_other_team, equipe[n_equipe], points[n_equipe] = disp.compute_dataframe_display(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N, in_other_team)
+    
+    disp.save_in_csv(equipe, points, PATH)
+    disp.display(equipe, points)
     
 main("../csv/", linear=False)
