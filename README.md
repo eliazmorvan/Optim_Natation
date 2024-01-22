@@ -16,7 +16,7 @@ pyomo 6.7.0
 scipy 1.11.4
 ```
 
-## Stucture du code
+## Structure du code
 Deux codes selon que l'on considère la version linéaire (MILP) ou non linéaire (MINLP) du problème.
 - MILP : résolue par scipy
 - MINLP : résolue par pyomo (non-linéarité uniquement dans la fonction coût)
@@ -25,11 +25,11 @@ Dans tout les cas, il suffit de lancer `main.py` pour générer l'équipe optima
 
 ## Structure des données d'entrée
 
-4 fichiers, au format `.csv` :
+5 fichiers, au format `.csv` :
 - ffnex_table_cotation : table de cotation de la FFN
 - nageur_points : point marqué par chaque nageur sur chaque nage
 - participation : table binaire, 1 participe, 0 ne participe pas
 - relais_coef : Coefficient de rajeunissement à appliquer pour le calcul des points des relais
 - relais_temps : Temps réalisé par chaque nageur sur chaque nage du relais
 
-Voir les fichiers sur ce git pour plus d'information.
+Voir les fichiers sur ce git pour plus d'informations.
