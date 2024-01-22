@@ -2,7 +2,7 @@
 
 ## Formalisation du problème mathématique et choix d'implémentation
 
-Voir le fichier "formalisation.pdf".
+Voir le fichier `formalisation.pdf`.
 Latex sur overleaf.
 
 ## Packages
