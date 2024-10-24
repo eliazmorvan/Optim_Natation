@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Optionnel : pour le style -->
+</head>
+<body>
+    <div class="container">
+        <h1>Meilleure équipe Interclubs Novembre - Femmes</h1>
+        <div>
+            {{ femmes | safe }}
+        </div>
+
+        <h1>Meilleure équipe Interclubs Novembre - Hommes</h1>
+        <div>
+            {{ hommes | safe }}
+        </div>
+
+        <a href="/" class="btn btn-primary">Retour à la page principale</a>
+    </div>
+</body>
+</html>

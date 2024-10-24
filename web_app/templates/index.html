@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse performances Rennes Natation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Analyse performances Rennes Natation</h1>
+    
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="annuaire_file">Sélectionner le fichier d'annuaire des licenciés :</label>
+        <input type="file" name="annuaire_csv" id="annuaire_file" required>
+        <br>
+        <label for="participation_file">Sélectionner le fichier de participation :</label>
+        <input type="file" name="participation_csv" id="participation_file" required>
+        <br>
+        <input type="submit" value="Charger et analyser">
+    </form>
+
+    <!-- Lien pour modifier les meilleures performances -->
+    <div>
+        <a href="/edit">Modifier les Meilleures Performances</a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
