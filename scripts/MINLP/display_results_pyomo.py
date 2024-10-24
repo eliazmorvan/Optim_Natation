@@ -5,7 +5,7 @@ Created on Sun Jan 14 10:48:42 2024
 @author: gcherot
 """
 import pandas as pd
-import functions as func
+import scripts.MILP.functions as func
 
 def compute_dataframe_display(model, nageur_point, relais_NL, relais_4N, RHO_4N, T_4N, in_other_team):
     Nageur_indiv = []

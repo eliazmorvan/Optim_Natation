@@ -6,7 +6,7 @@ Created on Fri Jan 12 17:45:57 2024
 """
 
 import pyomo.environ as pyo
-import import_data as imp
+import scripts.MILP.import_data as imp
 
 PATH = "../nageur_points.csv"
 

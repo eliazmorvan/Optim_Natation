@@ -5,7 +5,7 @@ Created on Wed Jan 10 18:11:21 2024
 @author: gcherot
 """
 import numpy as np
-import functions as func
+import scripts.MILP.functions as func
 import create_matrix as cr
 
 

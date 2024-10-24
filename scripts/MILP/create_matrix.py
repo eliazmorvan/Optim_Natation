@@ -5,8 +5,8 @@ Created on Wed Jan 10 18:41:54 2024
 @author: gcherot
 """
 import numpy as np
-import functions as func
-import import_data as imp
+import MILP.functions as func
+import MILP.import_data as imp
 
 def create_14(n,m,r):
     A = np.zeros((m,n*m+n+r*n))
@@ -122,12 +122,12 @@ def create_A_bl_ul(n,m,r,G):
     ul = func.build_constrains((ul14,ul16,ul18,ul20,ul22,ul24))
     return A, bl, ul
 
-def main(PATH, coeff_10x50=1, coeff_4x50=1):
+def main(PATH,sexe, coeff_10x50=1, coeff_4x50=1):
     n = 20
     m = 10
     r = 4
     S, T, R, G = func.import_data_fake(n,m,r)
-    S, T, R, G, n, m, r, df = imp.import_perf_indiv(PATH)
+    S, T, R, G, n, m, r, df = imp.import_perf_indiv(PATH,sexe)
     A, bl, ul = create_A_bl_ul(n,m,r,G)
     c = func.create_c(S, coeff_10x50*T, coeff_4x50*R)
     Nx = len(c) # size of x

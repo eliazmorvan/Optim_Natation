@@ -8,7 +8,7 @@ import pyomo.environ as pyo
 
 import MINLP.create_matrixpyomo as cre
 import MINLP.display_results_pyomo as disp
-import import_data as imp
+import scripts.MILP.import_data as imp
 
 def remove_swimmers(in_other_team):
     pass

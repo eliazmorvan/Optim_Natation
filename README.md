@@ -33,3 +33,21 @@ Dans tout les cas, il suffit de lancer `main.py` pour générer l'équipe optima
 - relais_temps : Temps réalisé par chaque nageur sur chaque nage du relais
 
 Voir les fichiers sur ce git pour plus d'informations.
+
+
+
+# Application de gestion des performances de natation
+
+## Prérequis
+- Python 3.x
+- Flask
+- Pandas
+- Selenium
+
+## Installation
+
+1. Cloner le dépôt
+2. Installer les dépendances :
+
+```bash
+pip install flask pandas selenium
