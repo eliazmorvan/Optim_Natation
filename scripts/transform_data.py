@@ -61,7 +61,7 @@ def update_output_dataframe(output_df, row, sexe):
 
 def merge_participation_data(output_df, participation_file):
     """Fusionne les données de participation et filtre les nageurs non participants."""
-    participation_df = pd.read_csv(participation_file, sep=";", encoding='ISO-8859-1')
+    participation_df = pd.read_csv(participation_file, sep=",", encoding='ISO-8859-1')
     merged_df = pd.merge(output_df, participation_df, left_on="NomPrenom", right_on="Nom ", how="inner")
     filtered_df = merged_df[merged_df['Participation'] == 0]
     filtered_df.drop(columns=["Nom ", "Report  Participation", "Participation"], inplace=True)

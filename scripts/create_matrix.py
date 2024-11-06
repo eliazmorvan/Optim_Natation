@@ -5,8 +5,8 @@ Created on Wed Jan 10 18:41:54 2024
 @author: gcherot
 """
 import numpy as np
-import MILP.functions as func
-import MILP.import_data as imp
+import functions as func
+import import_data as imp
 
 def create_14(n,m,r):
     A = np.zeros((m,n*m+n+r*n))
@@ -122,7 +122,7 @@ def create_A_bl_ul(n,m,r,G):
     ul = func.build_constrains((ul14,ul16,ul18,ul20,ul22,ul24))
     return A, bl, ul
 
-def main(PATH,sexe, coeff_10x50=1, coeff_4x50=1):
+def matrix(PATH,sexe, coeff_10x50=1, coeff_4x50=1):
     n = 20
     m = 10
     r = 4
