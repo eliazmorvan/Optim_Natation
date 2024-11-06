@@ -98,8 +98,8 @@ def process_file(input_file, participation_file, output_file, sexe):
 def main():
     # Liste des fichiers d'entrée, de sortie et les sexes associés
     files = [
-        {'input': './meilleures_performances_femmes.csv', 'output': './csv/femmes_points_novembre.csv', 'sexe': 'F'},
-        {'input': './meilleures_performances_hommes.csv', 'output': './csv/hommes_points_novembre.csv', 'sexe': 'M'}
+        {'input': './csv/meilleures_performances_femmes.csv', 'output': './csv/femmes_points_novembre.csv', 'sexe': 'F'},
+        {'input': './csv/meilleures_performances_hommes.csv', 'output': './csv/hommes_points_novembre.csv', 'sexe': 'M'}
     ]
     participation_file = './csv/participation_novembre.csv'
     
