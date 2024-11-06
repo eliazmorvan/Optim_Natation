@@ -4,13 +4,13 @@ Created on Thu Jan 11 10:52:06 2024
 
 @author: gcherot
 """
-import MILP.functions as func
+import functions as func
 import os
 import pandas as pd
 from MILP.scrapper_results import (charger_donnees_licencies, init_driver, collecter_performances, 
                               sauver_performances_csv, charger_coefficients, enrichir_performances, 
                               filtrer_meilleures_performances)
-from MILP.transform_data import (process_file)
+from transform_data import (process_file)
 
 def import_perf_indiv(PATH, sexe, MILP=True, in_other_team=None):   
     """
@@ -44,7 +44,7 @@ def import_perf_indiv(PATH, sexe, MILP=True, in_other_team=None):
         # Fichiers à utiliser
     fichier_licencies = '../csv/annuaire_licencies 2.csv'
     fichier_coefficients = '../csv/ffnex_coefficients_rajeunissement.csv'
-    fichier_participation = '../csv/participation_novembre.csv'
+    fichier_participation = PATH + 'participation_novembre.csv'
     fichier_performances_sortie = 'performances_nageurs.csv'
 
     """
@@ -80,12 +80,15 @@ def import_perf_indiv(PATH, sexe, MILP=True, in_other_team=None):
     process_file('./meilleures_performances_hommes.csv', fichier_participation, './csv/hommes_points_novembre.csv', 'M')
     """
     print("Le processus d'importation et de transformation des données est terminé.")
+
         
     # Spécifier le fichier selon le sexe
     if sexe == 'F':
-        nageur_points_file = PATH + "/femmes_points_novembre.csv"
+        process_file(PATH + 'meilleures_performances_femmes.csv', fichier_participation, PATH + 'femmes_points_novembre.csv', sexe)
+        nageur_points_file = PATH + "femmes_points_novembre.csv"
     else:
-        nageur_points_file = PATH + "/hommes_points_novembre.csv"
+        process_file(PATH + 'meilleures_performances_hommes.csv', fichier_participation, PATH + 'hommes_points_novembre.csv', 'M')
+        nageur_points_file = PATH + "hommes_points_novembre.csv"
 
     print(nageur_points_file)
     
@@ -109,7 +112,7 @@ def import_perf_indiv(PATH, sexe, MILP=True, in_other_team=None):
     relais_coeff = pd.read_csv(PATH+"/relais_coef.csv", sep=";",
                                encoding='ISO-8859-1',
                                converters={col: convert_to_float_0 for col in nage_relais})
-    participation = pd.read_csv(PATH+"/participation_novembre.csv", sep=";",
+    participation = pd.read_csv(PATH+"participation_novembre.csv", sep=",",
                                 encoding='ISO-8859-1',
                                 converters={"Participation" : convert_to_float_0})
     participation = participation.set_index(list(participation.columns[[0,1]]))

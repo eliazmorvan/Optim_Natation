@@ -4,39 +4,33 @@ import streamlit as st
 import os
 
 
-DATA_FOLDER = 'csv/'
+DATA_FOLDER = 'data/'
 
 # Streamlit options
-st.set_page_config(layout="wide")
+st.set_page_config(
+    page_title="Home")
 
-# ST title
-st.title('Equipes Rennes Natation')
+# Sidebar for Date Picker
+st.sidebar.markdown('# APP Rennes Natation v0.2')
+st.sidebar.markdown('## Saison 2024-25')
+st.sidebar.markdown(
+    "## App de séléction d'équipes Rennes Natation.")
+st.sidebar.image('img/RennesNat.jpg', use_column_width=True)
 
-st.sidebar.header("Sélectionner un genre")
-selected_gender = st.sidebar.selectbox("Choisissez le genre", ["Homme", "Femme"])
+st.title('# APP Rennes Natation v.0.2')
+st.write('## Saison 24/25')
 
-# Format the date as YYYYMMDD
-if selected_gender=="Homme":
-    file_gender = "M"
-else :
-    file_gender = "F"
 
-file_name = f"equipe_{file_gender}_novembre.csv"  
-file_path = os.path.join(DATA_FOLDER, file_name)
-print(file_path)
+st.markdown("""
+    Sur mobile, veuillez cliquer sur la flèche en haut à gauche pour accéder au menu.
 
-# Load the file based on the selected date
-if os.path.exists(file_path):
-    # Display the filename
-    st.write(f"### File loaded: {file_name}")
-
-    # Load the file
-    df = pd.read_csv(file_path)
-
-    # Show the dataframe in the app
-    st.dataframe(df)
-
-    # Optionally, you can apply your previous heatmap, logos, etc.
-    # Apply heatmap or logos if needed
-else:
-    st.write(f"File {file_path} does not exist.")
+    Cette application vous permet d'analyser visuellement les performances des nageurs de Rennes Natation, pour choisir les équipes pour les compétitions.
+    
+    ### Utilisation de l'application Rennes Natation
+    - Première section :
+        - Page participation : Tableau à modifier en fonction de la disponibilité des nageurs
+    - Deuxième section :
+        - Page performances : Tableau à modifier avec les meilleurs performances des nageurs depuis le 01/01/2022
+    - Troisième section :
+        - Page équipes : Tableau des équipes optimales, par sexe
+""")

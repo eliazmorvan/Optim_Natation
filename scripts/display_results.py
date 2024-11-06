@@ -7,7 +7,7 @@ Created on Thu Jan 11 12:18:30 2024
 import numpy as np
 import pandas as pd
 
-def display(X, P, Y, S, T, R, df,sexe):
+def display(PATH,X, P, Y, S, T, R, df,sexe):
     # Récupérer les noms des nageurs sélectionnés
     Nageur = df.loc[P == 1, "NomPrenom"]
 
@@ -67,6 +67,6 @@ def display(X, P, Y, S, T, R, df,sexe):
     # Afficher le DataFrame
     print(df_final)
 
-    df_final.to_csv('../csv/equipe_'+ sexe +'_novembre.csv', sep=";",index=False)
+    df_final.to_csv(PATH + 'equipe_'+ sexe +'_novembre.csv', sep=";",index=False)
     
     return df_final
