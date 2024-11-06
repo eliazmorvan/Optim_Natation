@@ -69,7 +69,7 @@ def merge_participation_data(output_df, participation_file):
 
 def save_csv_file(df, output_file, sep=';'):
     """Sauvegarde un DataFrame dans un fichier CSV."""
-    df.to_csv(output_file, sep=sep, index=False)
+    df.to_csv(output_file, sep=sep, index=False,encoding="ISO-8859-1")
 
 def process_file(input_file, participation_file, output_file, sexe):
     """Processus complet pour un fichier d'entrée donné et un sexe spécifique."""

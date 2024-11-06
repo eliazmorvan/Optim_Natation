@@ -8,14 +8,14 @@ CSV_PATH = "csv/participation_novembre.csv"
 def load_participation_data():
     # Charger les données de participation
     if os.path.exists(CSV_PATH):
-        return pd.read_csv(CSV_PATH, encoding="latin-1",sep=",")
+        return pd.read_csv(CSV_PATH, encoding="ISO-8859-1",sep=",")
     else:
         st.warning("Le fichier de participation n'existe pas encore.")
         return pd.DataFrame()  # Retourne un dataframe vide si le fichier n'existe pas
 
 def save_participation_data(data):
     # Sauvegarder les données de participation
-    data.to_csv(CSV_PATH, index=False,sep=",")
+    data.to_csv(CSV_PATH, index=False,sep=",",encoding="ISO-8859-1")
     st.success("Les modifications ont été enregistrées.")
 
 # Interface de la page "Participation"

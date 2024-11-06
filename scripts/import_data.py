@@ -106,6 +106,7 @@ def import_perf_indiv(PATH, sexe, MILP=True, in_other_team=None):
     nageur_point = pd.read_csv(nageur_points_file, sep=";",
                                encoding='ISO-8859-1',
                                converters={col: convert_to_float_0 for col in nage_indiv})
+    print(nageur_point)
     relais_temps = pd.read_csv(PATH+"/relais_temps.csv", sep=";",
                                encoding='ISO-8859-1',
                                converters={col: convert_to_float for col in nage_relais})
