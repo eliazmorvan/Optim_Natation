@@ -18,7 +18,7 @@ else :
 def load_performances_data():
     # Charger les données de performances
     if os.path.exists(CSV_PATH):
-        return pd.read_csv(CSV_PATH, encoding="utf-8",sep=";")
+        return pd.read_csv(CSV_PATH, encoding="latin-1",sep=";")
     else:
         st.warning("Le fichier de performances n'existe pas encore.")
         return pd.DataFrame()  # Retourne un dataframe vide si le fichier n'existe pas
