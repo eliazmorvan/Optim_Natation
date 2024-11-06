@@ -67,6 +67,6 @@ def display(PATH,X, P, Y, S, T, R, df,sexe):
     # Afficher le DataFrame
     print(df_final)
 
-    df_final.to_csv(PATH + 'equipe_'+ sexe +'_novembre.csv', sep=";",index=False)
+    df_final.to_csv(PATH + 'equipe_'+ sexe +'_novembre.csv', sep=";",index=False,encoding="ISO-8859-1")
     
     return df_final
