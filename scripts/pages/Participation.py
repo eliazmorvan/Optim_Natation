@@ -8,7 +8,7 @@ CSV_PATH = "csv/participation_novembre.csv"
 def load_participation_data():
     # Charger les données de participation
     if os.path.exists(CSV_PATH):
-        return pd.read_csv(CSV_PATH, encoding="utf-8",sep=",")
+        return pd.read_csv(CSV_PATH, encoding="latin-1",sep=",")
     else:
         st.warning("Le fichier de participation n'existe pas encore.")
         return pd.DataFrame()  # Retourne un dataframe vide si le fichier n'existe pas
